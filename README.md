@@ -6,6 +6,6 @@ TEST_DATABASE=mongoDB-test
 TESTING=false  
 SESSION_SECRET=mysecret  
 
-2) run Redis and mongoDB servers;
+2) start Redis and mongoDB servers;
 
-3) start project.
+3) run project.
