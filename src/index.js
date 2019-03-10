@@ -29,7 +29,7 @@ const RedisStore = connectRedis(session);
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000/"
+    origin: "http://localhost:3000"
   })
 );
 
@@ -50,7 +50,7 @@ app.use(
   })
 );
 
-server.applyMiddleware({ app });
+server.applyMiddleware({ app, cors: false });
 
 app.on("ready", () => {
   app.listen(8000, () => {
