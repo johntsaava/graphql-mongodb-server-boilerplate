@@ -58,9 +58,11 @@ app.on("ready", () => {
   });
 });
 
+const TESTING = false;
+
 mongoose.connect(
   `mongodb://localhost/${
-    process.env.TESTING ? process.env.TEST_DATABASE : process.env.DATABASE
+    TESTING ? process.env.TEST_DATABASE : process.env.DATABASE
   }`,
   {
     useFindAndModify: false,
@@ -68,7 +70,7 @@ mongoose.connect(
     useNewUrlParser: true
   },
   async () => {
-    if (process.env.TESTING) {
+    if (TESTING) {
       await mongoose.connection.db.dropDatabase();
       await seedDb();
     }
