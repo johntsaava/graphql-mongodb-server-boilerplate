@@ -1,11 +1,10 @@
 {
-  "name": "graphql-server-boilerplate",
+  "name": "graphql-mongodb-server-boilerplate",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
-    "test": "mocha --require @babel/register src/tests/*.spec.js"
+    "start": "nodemon --exec babel-node src/index.js"
   },
   "keywords": [],
   "author": "John Tsaava <johntsaava@gmail.com>",
@@ -15,10 +14,6 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.0.0",
-    "axios": "^0.18.0",
-    "chai": "^4.2.0",
-    "faker": "^4.1.0",
-    "mocha": "^6.0.2",
     "nodemon": "^1.18.10"
   },
   "dependencies": {
@@ -34,6 +29,7 @@
     "ioredis": "^4.6.2",
     "mongoose": "^5.4.18",
     "nodemailer": "^5.1.1",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "yup": "^0.27.0"
   }
 }

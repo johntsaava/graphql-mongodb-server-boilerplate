@@ -11,6 +11,7 @@ import {
 } from "../constants/redisPrefixes";
 import createConfirmationUrl from "../utils/createConfirmationUrl";
 import createChangePasswordUrl from "../utils/createChangePasswordUrl";
+import { signUpSchema, passwordValidation } from "../yupSchemas/user";
 
 export default {
   Query: {
@@ -32,11 +33,15 @@ export default {
   },
 
   Mutation: {
-    signUp: async (
-      parent,
-      { input: { firstName, lastName, username, email, password } },
-      { models }
-    ) => {
+    signUp: async (parent, { input }, { models }) => {
+      try {
+        await signUpSchema.validate(input, { abortEarly: false });
+      } catch (err) {
+        return new Error(err.errors);
+      }
+
+      const { firstName, lastName, username, email, password } = input;
+
       const user = new models.User({
         firstName,
         lastName,
@@ -103,6 +108,12 @@ export default {
     ) => {
       const userId = await redis.get(`${forgotPasswordPrefix}${token}`);
       if (!userId) return null;
+
+      try {
+        await passwordValidation.validate(password);
+      } catch (err) {
+        return new Error(err.errors);
+      }
 
       const user = await models.User.findByIdAndUpdate(userId, {
         password: await bcrypt.hash(password, 12)

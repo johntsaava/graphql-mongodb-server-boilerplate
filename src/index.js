@@ -10,7 +10,6 @@ import redis from "./redis";
 import schema from "./schema";
 import resolvers from "./resolvers";
 import models from "./models";
-import seedDb from "./utils/seedDb";
 
 const server = new ApolloServer({
   typeDefs: schema,
@@ -58,24 +57,11 @@ app.on("ready", () => {
   });
 });
 
-const TESTING = false;
-
-mongoose.connect(
-  `mongodb://localhost/${
-    TESTING ? process.env.TEST_DATABASE : process.env.DATABASE
-  }`,
-  {
-    useFindAndModify: false,
-    useCreateIndex: true,
-    useNewUrlParser: true
-  },
-  async () => {
-    if (TESTING) {
-      await mongoose.connection.db.dropDatabase();
-      await seedDb();
-    }
-  }
-);
+mongoose.connect(process.env.DATABASE, {
+  useFindAndModify: false,
+  useCreateIndex: true,
+  useNewUrlParser: true
+});
 
 mongoose.connection.once("open", () => {
   console.log("MongoDB connected");
